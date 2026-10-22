@@ -3,7 +3,7 @@
 **Duration:** 3 hours
 **Total marks:** 100 (SQL: 75 | Power BI: 25)
 **Dataset:** `SunVolt Solar Customer Data.xlsx` (sheet: *Solar Customer Data*, 1,026 rows, 17 columns)
-**Tools:** SQL Server (SSMS) and Power BI Desktop
+**Tools:** SQL Server (SSMS) for Sections A to E. For Section F, choose **one** dashboard tool: Power BI Desktop or Looker (see Section F).
 
 ---
 
@@ -180,18 +180,27 @@ Sort by `age_segment`.
 
 ---
 
-## Section F: Power BI Dashboard (25 marks)
+## Section F: Dashboard (25 marks)
 
-Build a two-page dashboard in Power BI Desktop, using the same data as in Section A.
+Build a two-page dashboard using the same data as in Section A. **Choose one tool:**
+
+| Option | Tool | What you need |
+|---|---|---|
+| 1 | **Power BI Desktop** | Output file: `<student_number>_dashboard.pbix`. Measures written in DAX. |
+| 2 | **Looker** (or Looker Studio) | Output: a shared link or export of your dashboard, plus a screenshot named `<student_number>_dashboard.png`. Measures as Looker calculated fields or LookML measures. |
+
+State your choice on the first line of your SQL file as a comment: `-- Section F tool: Power BI` or `-- Section F tool: Looker`. The marks are the same for both tools.
+
+**Load the data.** Connect your chosen tool to the same two tables from Section A (`customers` and `distance_bands`). Use the SQL Server connection or an export of the tables.
 
 **F1 (4 marks): Data model.**
 - Load both tables (`customers` and `distance_bands`).
-- Create a relationship: `customers[distance_band]` to `distance_bands[distance_band]`, many-to-one, single direction.
+- Create a relationship (Power BI) or a join (Looker explore): `customers.distance_band` to `distance_bands.distance_band`, many-to-one.
 
-**F2 (6 marks): DAX measures.** Create these measures in a measures table:
+**F2 (6 marks): Measures.** Create these measures:
 - `Total Customers` = count of rows in `customers`
 - `Purchases` = sum of `purchase_flag`
-- `Conversion Rate %` = `Purchases` divided by `Total Customers`, using `DIVIDE`, formatted as a percentage
+- `Conversion Rate %` = `Purchases` divided by `Total Customers`, with a zero-safe division (`DIVIDE` in Power BI, or a guarded calculation in Looker), formatted as a percentage
 - `Avg Annual Income` = average of `annual_income`
 
 **F3 (10 marks): Page 1, "Overview".**
@@ -199,7 +208,7 @@ Build a two-page dashboard in Power BI Desktop, using the same data as in Sectio
 - A bar chart of `Conversion Rate %` by `region`
 - A column chart of `Purchases` by `education_level`
 - A donut chart of customers split by `purchased_solar_system`
-- Two slicers: `region` and `age_group`
+- Two filters: `region` and `age_group` (Power BI slicers, or Looker dashboard filters)
 - Every visual must have a clear title and readable labels
 
 **F4 (5 marks): Page 2, "Customer Profile".**

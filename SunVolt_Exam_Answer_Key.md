@@ -323,6 +323,20 @@ WHERE purchase_flag = 1;
 
 ## Section F: Power BI Dashboard (25 marks)
 
+### Choice of tool
+
+Students choose **Power BI Desktop** or **Looker** (Looker Studio is accepted as Looker). Mark both options against the same rubric below. Translate the terms as follows:
+
+| Rubric term | Power BI | Looker / Looker Studio |
+|---|---|---|
+| Relationship | Model view relationship | Explore join (LookML) or data blend (Looker Studio) |
+| Measure | DAX measure | LookML measure or calculated field |
+| Page | Report page | Dashboard tab |
+| Slicer | Slicer | Dashboard filter |
+| Sort order | Sort by column | `order_by_field` in LookML, or a sort set on the chart |
+
+A Looker student who submits a screenshot and a shared link can receive full marks for the visuals. Deduct the F5 mark only if the insights are missing. Check the figures directly against the reference table below.
+
 ### Reference figures
 
 Use these to mark the dashboard. Students who remove duplicates may get slightly different totals. Accept those if the method is stated and correct.

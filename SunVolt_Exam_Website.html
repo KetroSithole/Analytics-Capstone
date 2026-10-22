@@ -4,175 +4,152 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SunVolt Data Analytics Exam</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
 <style>
-  :root {
-    --bg: #f6f7f9;
-    --surface: #ffffff;
-    --text: #1d2330;
-    --muted: #5d6676;
-    --border: #dfe3ea;
-    --accent: #e08a00;
-    --accent-soft: #fdf1dc;
-    --code-bg: #101826;
-    --code-text: #e6edf7;
+  body { background: var(--bs-body-bg); }
+  .exam-hero {
+    background: linear-gradient(135deg, #1f3b73 0%, #2e6fd6 55%, #f2a332 130%);
+    color: #fff;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #12151c;
-      --surface: #1b2029;
-      --text: #e8ecf3;
-      --muted: #9aa3b2;
-      --border: #2c3340;
-      --accent: #f2a332;
-      --accent-soft: #33281a;
-      --code-bg: #0b0f16;
-      --code-text: #e6edf7;
-    }
+  .exam-hero .lead { color: rgba(255,255,255,.88); }
+  .timer {
+    font-variant-numeric: tabular-nums;
+    font-size: 1.6rem; font-weight: 700;
+    background: rgba(0,0,0,.25); border-radius: .75rem; padding: .35rem .9rem;
   }
-  :root[data-theme="dark"] {
-    --bg: #12151c;
-    --surface: #1b2029;
-    --text: #e8ecf3;
-    --muted: #9aa3b2;
-    --border: #2c3340;
-    --accent: #f2a332;
-    --accent-soft: #33281a;
-    --code-bg: #0b0f16;
-    --code-text: #e6edf7;
+  .timer.warn { background: #b02a37; }
+  .sticky-nav { position: sticky; top: 0; z-index: 1020; }
+  .q-card { transition: border-color .15s ease, box-shadow .15s ease; }
+  .q-card.done { border-color: var(--bs-success); }
+  .q-card:hover { box-shadow: 0 .25rem .75rem rgba(0,0,0,.08); }
+  .q-id {
+    display: inline-block; min-width: 2.6rem; text-align: center;
+    font-weight: 700; color: #fff; background: #2e6fd6; border-radius: .5rem; padding: .15rem .4rem;
   }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  }
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 28px 16px 22px;
-  }
-  .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
-  h1 { margin: 0 0 6px; font-size: 1.7rem; }
-  .meta { color: var(--muted); font-size: 0.95rem; display: flex; flex-wrap: wrap; gap: 8px 18px; }
-  nav.sections {
-    position: sticky; top: 0; z-index: 2;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-  }
-  nav.sections .wrap { display: flex; gap: 8px; overflow-x: auto; padding-top: 10px; padding-bottom: 10px; }
-  nav.sections a {
-    white-space: nowrap; text-decoration: none; color: var(--text);
-    border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; font-size: 0.9rem;
-  }
-  nav.sections a:hover { border-color: var(--accent); }
-  main { padding: 24px 0 60px; }
-  section.block { margin-bottom: 32px; }
-  h2 { font-size: 1.25rem; margin: 0 0 4px; }
-  .section-marks { color: var(--muted); font-size: 0.9rem; margin-bottom: 12px; }
-  .card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 18px;
-    margin-bottom: 12px;
-  }
-  .q-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
-  .q-id { font-weight: 700; color: var(--accent); }
-  .badge {
-    background: var(--accent-soft); color: var(--accent);
-    border-radius: 999px; padding: 2px 10px; font-size: 0.82rem; font-weight: 600; white-space: nowrap;
-  }
-  .q-text { margin: 8px 0 0; }
-  .hint { color: var(--muted); font-size: 0.92rem; margin: 8px 0 0; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 10px 0 4px; }
-  th, td { text-align: left; border-bottom: 1px solid var(--border); padding: 7px 8px; vertical-align: top; }
-  th { color: var(--muted); font-weight: 600; }
-  .table-wrap { overflow-x: auto; }
-  .info { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
-  .info ol, .info ul { margin: 6px 0 0; padding-left: 20px; }
-  .info li { margin-bottom: 4px; }
-  code { font-family: ui-monospace, Consolas, monospace; font-size: 0.9em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
-  .sql-box {
-    background: var(--code-bg); color: var(--code-text);
-    border-radius: 8px; padding: 10px 12px; margin-top: 10px;
-    font: 0.88rem/1.5 ui-monospace, Consolas, monospace; white-space: pre-wrap;
-  }
-  .toolbar { display: flex; gap: 8px; align-items: center; margin: 12px 0 0; flex-wrap: wrap; }
-  .toolbar input {
-    flex: 1 1 220px; padding: 8px 10px; border-radius: 8px;
-    border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit;
-  }
-  button {
-    font: inherit; cursor: pointer; border-radius: 8px; padding: 7px 12px;
-    border: 1px solid var(--border); background: var(--surface); color: var(--text);
-  }
-  button:hover { border-color: var(--accent); }
-  .hidden { display: none !important; }
-  footer { color: var(--muted); font-size: 0.85rem; text-align: center; padding: 20px 0 40px; }
-  @media (max-width: 520px) {
-    h1 { font-size: 1.4rem; }
-    .q-head { flex-direction: column; gap: 6px; }
+  .sql-cell { font-family: var(--bs-font-monospace); font-size: .88rem; }
+  .sticky-progress { height: .6rem; }
+  .tool-btn.active { color: #fff; }
+  .section-head { border-left: .35rem solid #f2a332; padding-left: .75rem; }
+  details > summary { cursor: pointer; list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+  details[open] .chev { transform: rotate(90deg); }
+  .chev { display: inline-block; transition: transform .15s ease; }
+  code { color: var(--bs-danger-text-emphasis); }
+  @media (max-width: 576px) {
+    .timer { font-size: 1.25rem; }
   }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <h1>SunVolt Solar: First-Year Data Analytics Practical Exam</h1>
-    <div class="meta">
-      <span>Duration: 3 hours</span>
-      <span>Total: 100 marks (SQL 75 | Power BI 25)</span>
-      <span>Dataset: SunVolt Solar Customer Data.xlsx</span>
+<nav class="navbar navbar-expand bg-body-tertiary border-bottom sticky-nav">
+  <div class="container-xl">
+    <span class="navbar-brand fw-semibold">SunVolt Data Analytics</span>
+    <div class="ms-auto d-flex align-items-center gap-2">
+      <span class="small text-body-secondary d-none d-md-inline">Progress</span>
+      <div class="progress sticky-progress" style="width: 140px;" role="progressbar" aria-label="Exam progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div id="progressBar" class="progress-bar bg-success" style="width: 0%"></div>
+      </div>
+      <span id="progressText" class="small fw-semibold ms-1">0/30</span>
+      <button id="themeBtn" class="btn btn-sm btn-outline-secondary ms-2" type="button">Theme</button>
     </div>
-    <div class="toolbar">
-      <input id="search" type="search" placeholder="Search questions (for example: GROUP BY, conversion, B4)" aria-label="Search questions">
-      <button id="expandAll" type="button">Expand all</button>
-      <button id="theme" type="button" aria-label="Toggle colour theme">Toggle theme</button>
+  </div>
+</nav>
+
+<header class="exam-hero py-5">
+  <div class="container-xl">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-8">
+        <p class="text-uppercase small fw-semibold mb-2 opacity-75">First-year practical exam</p>
+        <h1 class="display-6 fw-bold mb-2">SunVolt Solar: Data Analytics Exam</h1>
+        <p class="lead mb-3">Write SQL to solve business questions on customer data, then build a dashboard in Power BI or Looker.</p>
+        <div class="d-flex flex-wrap gap-2">
+          <span class="badge rounded-pill text-bg-light">100 marks</span>
+          <span class="badge rounded-pill text-bg-light">3 hours</span>
+          <span class="badge rounded-pill text-bg-light">75 SQL + 25 dashboard</span>
+          <span class="badge rounded-pill text-bg-light">1,026 customer rows</span>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body text-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-semibold">Time remaining</span>
+              <span id="timer" class="timer text-dark-emphasis">03:00:00</span>
+            </div>
+            <div class="d-grid gap-2">
+              <button id="startBtn" class="btn btn-primary" type="button">Start exam timer</button>
+              <button id="resetBtn" class="btn btn-outline-secondary btn-sm" type="button">Reset timer</button>
+            </div>
+            <p class="small text-body-secondary mt-2 mb-0">The timer keeps running if you reload the page. A warning shows at 15 minutes left.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </header>
 
-<nav class="sections" aria-label="Exam sections">
-  <div class="wrap" id="navLinks"></div>
-</nav>
+<main class="container-xl py-4">
 
-<main>
-  <div class="wrap">
-
-    <section class="block" id="instructions">
-      <h2>Instructions</h2>
-      <div class="info">
-        <ol>
-          <li>Save all SQL in one file named <code>&lt;student_number&gt;_exam.sql</code>. Run it top to bottom.</li>
-          <li>Use the table and column names exactly as given.</li>
-          <li>Where a question asks for an <strong>alias</strong>, use the exact alias name given.</li>
-          <li>Put a comment above each answer, for example <code>-- A2</code>.</li>
-          <li>Submit your <code>.sql</code> file and your Power BI file <code>&lt;student_number&gt;_dashboard.pbix</code>.</li>
-          <li>Work independently. Do not discuss answers with other students.</li>
-        </ol>
+  <div class="row g-4">
+    <aside class="col-lg-3">
+      <div class="card shadow-sm sticky-lg-top" style="top: 5rem;">
+        <div class="card-header fw-semibold">Sections</div>
+        <div class="list-group list-group-flush" id="sectionNav"></div>
+        <div class="card-body small">
+          <div class="fw-semibold mb-1">Search questions</div>
+          <input id="search" type="search" class="form-control form-control-sm" placeholder="e.g. GROUP BY, B4, conversion" aria-label="Search questions">
+          <div class="d-flex gap-2 mt-2">
+            <button id="expandAll" class="btn btn-sm btn-outline-primary flex-fill" type="button">Jump to first</button>
+            <button id="clearDone" class="btn btn-sm btn-outline-secondary flex-fill" type="button">Clear ticks</button>
+          </div>
+        </div>
       </div>
-    </section>
+    </aside>
 
-    <section class="block" id="dictionary">
-      <h2>Dataset Dictionary</h2>
-      <div class="section-marks">Load the Excel sheet into two SQL tables, as described in Section A.</div>
-      <div class="card table-wrap">
-        <table>
-          <thead><tr><th>Excel column</th><th>SQL column</th><th>Table</th><th>Description</th></tr></thead>
-          <tbody id="dictBody"></tbody>
-        </table>
+    <div class="col-lg-9">
+
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h2 class="h5 section-head mb-3">Exam rules</h2>
+          <ol class="mb-0">
+            <li>Save all SQL in one file named <code>&lt;student_number&gt;_exam.sql</code>. Run it top to bottom.</li>
+            <li>Use the table and column names exactly as given. Put a comment above each answer, for example <code>-- A2</code>.</li>
+            <li>Where a question asks for an <strong>alias</strong>, use the exact name given.</li>
+            <li>Choose <strong>one</strong> dashboard tool in Section F: Power BI or Looker.</li>
+            <li>Submit your <code>.sql</code> file and your dashboard (<code>.pbix</code> or Looker link and screenshot).</li>
+            <li>Work independently. Do not discuss answers with other students.</li>
+          </ol>
+        </div>
       </div>
-    </section>
 
-    <div id="sections"></div>
+      <div class="card shadow-sm mb-4">
+        <div class="card-header fw-semibold">Dataset dictionary</div>
+        <div class="card-body">
+          <p class="small text-body-secondary mb-2">Load the Excel sheet into two SQL tables, as described in Section A.</p>
+          <div class="table-responsive">
+            <table class="table table-sm table-striped align-middle mb-0">
+              <thead><tr><th>Excel column</th><th>SQL column</th><th>Table</th><th>Description</th></tr></thead>
+              <tbody id="dictBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
 
-    <footer>SunVolt Solar exam. Total 100 marks.</footer>
+      <div id="sections"></div>
+
+      <p class="text-center small text-body-secondary mt-5 mb-0">SunVolt Solar exam. Total 100 marks.</p>
+    </div>
   </div>
 </main>
 
 <script>
+const TOTAL_QUESTIONS = 30;
+const TOOL_TIPS = {
+  powerbi: "Power BI: use Model view for the relationship, the Measures table for DAX (DIVIDE for safe division), and Sort by column for income bands.",
+  looker: "Looker: join the tables in an Explore (or blend them in Looker Studio), define measures as calculated fields, and set the sort order on the chart. A dashboard tab counts as a page."
+};
+
 const DICTIONARY = [
   ["Customer ID", "customer_id", "customers", "Customer identifier"],
   ["Marital Status", "marital_status", "customers", "Married / Single"],
@@ -195,19 +172,19 @@ const DICTIONARY = [
 
 const SECTIONS = [
   {
-    id: "A", title: "Section A: Database and Table Creation", marks: 12,
+    id: "A", title: "Database and Table Creation", marks: 12,
     questions: [
       { id: "A1", marks: 2, text: "Create a database called <code>SunVolt</code> and switch to it." },
       { id: "A2", marks: 4, text: "Create a table called <code>customers</code> with the 16 <code>customers</code> columns from the dictionary above.",
         hint: "Use the SQL column names exactly. Choose suitable data types: numbers must be numeric types and text must be character types. Do not add a primary key on <code>customer_id</code>." },
       { id: "A3", marks: 3, text: "Create a table called <code>distance_bands</code> with <code>distance_band</code> (text, primary key) and <code>installer_distance_order</code> (integer, not null). Then insert the five rows below.",
         table: { head: ["distance_band", "installer_distance_order"], rows: [["0-1 km", "1"], ["1-2 km", "2"], ["2-5 km", "3"], ["5-10 km", "4"], ["10+ km", "5"]] } },
-      { id: "A4", marks: 2, text: "Import all rows from the Excel sheet into <code>customers</code>. Use the SSMS Import Data wizard or your own method. Map <code>Distance from Nearest Installer</code> to <code>distance_band</code>. Leave out <code>Installer Distance Order</code>. Then write a query that returns the row count of <code>customers</code>." },
+      { id: "A4", marks: 2, text: "Import all rows from the Excel sheet into <code>customers</code>. Map <code>Distance from Nearest Installer</code> to <code>distance_band</code> and leave out <code>Installer Distance Order</code>. Then write a query that returns the row count of <code>customers</code>." },
       { id: "A5", marks: 1, text: "In one or two sentences, explain the difference between <code>DELETE</code>, <code>TRUNCATE</code> and <code>DROP</code>." }
     ]
   },
   {
-    id: "B", title: "Section B: Selecting, Filtering and Aliases", marks: 18,
+    id: "B", title: "Selecting, Filtering and Aliases", marks: 18,
     intro: "Use aliases where they are asked for. Every query must run without errors.",
     questions: [
       { id: "B1", marks: 3, text: "Return <code>customer_id</code>, <code>age</code>, and <code>annual_income</code>. Alias <code>annual_income</code> as <code>income</code>. Include only customers in the <strong>Europe</strong> region who are <strong>40 years or older</strong>." },
@@ -220,7 +197,7 @@ const SECTIONS = [
     ]
   },
   {
-    id: "C", title: "Section C: Aggregation and Grouping", marks: 22,
+    id: "C", title: "Aggregation and Grouping", marks: 22,
     intro: "Round all percentages to one decimal place. Use aliases for every calculated column.",
     questions: [
       { id: "C1", marks: 4, text: "Return one row with: <code>customers</code> (total rows); <code>purchases</code> (customers with <code>purchase_flag = 1</code>); and <code>conversion_pct</code> (purchases as a percentage of total customers)." },
@@ -231,7 +208,7 @@ const SECTIONS = [
     ]
   },
   {
-    id: "D", title: "Section D: Joins and Subqueries", marks: 13,
+    id: "D", title: "Joins and Subqueries", marks: 13,
     questions: [
       { id: "D1", marks: 4, text: "Join <code>customers</code> to <code>distance_bands</code> on <code>distance_band</code>. For each <code>installer_distance_order</code>, return <code>installer_distance_order</code>, <code>customers</code> and <code>purchases</code>. Sort by <code>installer_distance_order</code>." },
       { id: "D2", marks: 3, text: "Using a <strong>subquery</strong>, return <code>customer_id</code> and <code>annual_income</code> for customers earning <strong>more than the average annual income</strong> of all customers. Count how many rows are returned and put that count in a comment." },
@@ -240,7 +217,7 @@ const SECTIONS = [
     ]
   },
   {
-    id: "E", title: "Section E: Data Quality and CASE", marks: 10,
+    id: "E", title: "Data Quality and CASE", marks: 10,
     questions: [
       { id: "E1", marks: 4, text: "Use a <code>CASE</code> expression to group customers into these segments by <code>age</code>: <code>Under 40</code> (age below 40), <code>40-59</code> (age 40 to 59), and <code>60+</code> (age 60 and above). Return <code>age_segment</code>, <code>customers</code>, <code>purchases</code> and <code>conversion_pct</code>. Sort by <code>age_segment</code>." },
       { id: "E2", marks: 3, text: "Find every <code>customer_id</code> that appears <strong>more than once</strong> in <code>customers</code>. Return <code>customer_id</code> and a count aliased as <code>copies</code>. Sort by <code>customer_id</code>." },
@@ -249,85 +226,238 @@ const SECTIONS = [
     ]
   },
   {
-    id: "F", title: "Section F: Power BI Dashboard", marks: 25,
-    intro: "Build a two-page dashboard in Power BI Desktop, using the same data as in Section A.",
+    id: "F", title: "Dashboard", marks: 25,
+    intro: "Build a two-page dashboard using the same data as Section A. Choose one tool below and state it in your SQL file.",
+    tool: true,
     questions: [
-      { id: "F1", marks: 4, text: "<strong>Data model.</strong> Load both tables (<code>customers</code> and <code>distance_bands</code>). Create a relationship: <code>customers[distance_band]</code> to <code>distance_bands[distance_band]</code>, many-to-one, single direction." },
-      { id: "F2", marks: 6, text: "<strong>DAX measures.</strong> Create these measures in a measures table: <code>Total Customers</code> (count of rows in <code>customers</code>); <code>Purchases</code> (sum of <code>purchase_flag</code>); <code>Conversion Rate %</code> (<code>Purchases</code> divided by <code>Total Customers</code>, using <code>DIVIDE</code>, formatted as a percentage); and <code>Avg Annual Income</code> (average of <code>annual_income</code>)." },
-      { id: "F3", marks: 10, text: "<strong>Page 1, \"Overview\".</strong> Four KPI cards (<code>Total Customers</code>, <code>Purchases</code>, <code>Conversion Rate %</code>, <code>Avg Annual Income</code>); a bar chart of <code>Conversion Rate %</code> by <code>region</code>; a column chart of <code>Purchases</code> by <code>education_level</code>; a donut chart of customers split by <code>purchased_solar_system</code>; two slicers (<code>region</code> and <code>age_group</code>). Every visual must have a clear title and readable labels." },
+      { id: "F1", marks: 4, text: "<strong>Data model.</strong> Load both tables (<code>customers</code> and <code>distance_bands</code>). Create the relationship or join: <code>customers.distance_band</code> to <code>distance_bands.distance_band</code>, many-to-one." },
+      { id: "F2", marks: 6, text: "<strong>Measures.</strong> Create these measures: <code>Total Customers</code> (count of rows in <code>customers</code>); <code>Purchases</code> (sum of <code>purchase_flag</code>); <code>Conversion Rate %</code> (<code>Purchases</code> divided by <code>Total Customers</code>, zero-safe, formatted as a percentage); and <code>Avg Annual Income</code> (average of <code>annual_income</code>)." },
+      { id: "F3", marks: 10, text: "<strong>Page 1, \"Overview\".</strong> Four KPI cards (<code>Total Customers</code>, <code>Purchases</code>, <code>Conversion Rate %</code>, <code>Avg Annual Income</code>); a bar chart of <code>Conversion Rate %</code> by <code>region</code>; a column chart of <code>Purchases</code> by <code>education_level</code>; a donut chart of customers split by <code>purchased_solar_system</code>; two filters (<code>region</code> and <code>age_group</code>). Every visual must have a clear title and readable labels." },
       { id: "F4", marks: 5, text: "<strong>Page 2, \"Customer Profile\".</strong> (a) A column chart of <code>Conversion Rate %</code> by <code>income_band</code>, in logical order: <code>&lt;30k</code>, <code>30k-49k</code>, <code>50k-69k</code>, <code>70k-99k</code>, <code>100k+</code>. Alphabetical order does not count. (b) A bar chart of <code>Conversion Rate %</code> by <code>installer_distance_order</code> (from <code>distance_bands</code>), with the band names on the axis. (c) A matrix with <code>age_group</code> in rows, <code>homeowner_status</code> in columns and <code>Conversion Rate %</code> as the value." },
       { id: "F5", marks: 0, text: "<strong>Insights (required, 0 marks).</strong> On Page 2, add a text box with <strong>three</strong> short findings from your dashboard. Each finding must cite a number from one of your visuals." }
     ]
   }
 ];
 
+const STORE = {
+  get(key) { try { return localStorage.getItem(key); } catch (e) { return null; } },
+  set(key, value) { try { localStorage.setItem(key, value); } catch (e) { /* storage blocked: page still works */ } },
+  remove(key) { try { localStorage.removeItem(key); } catch (e) { /* ignore */ } }
+};
+
+const ALL_IDS = SECTIONS.flatMap(s => s.questions.map(q => q.id));
+
 function renderDictionary() {
   document.getElementById("dictBody").innerHTML = DICTIONARY.map(r =>
-    `<tr><td>${r[0]}</td><td><code>${r[1]}</code></td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("");
+    `<tr><td>${r[0]}</td><td class="sql-cell">${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("");
 }
 
 function renderSections() {
-  const nav = SECTIONS.map(s => `<a href="#sec-${s.id}">${s.id}: ${s.marks} marks</a>`).join("");
-  document.getElementById("navLinks").innerHTML = nav;
+  document.getElementById("sectionNav").innerHTML = SECTIONS.map(s =>
+    `<a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" href="#sec-${s.id}">
+       <span>${s.id}. ${s.title}</span><span class="badge text-bg-secondary rounded-pill">${s.marks}</span>
+     </a>`).join("");
+
+  const toolChoice = STORE.get("sunvolt-tool") || "powerbi";
 
   document.getElementById("sections").innerHTML = SECTIONS.map(s => {
     const qs = s.questions.map(q => {
-      let body = `<p class="q-text">${q.text}</p>`;
-      if (q.hint) body += `<p class="hint">Hint: ${q.hint}</p>`;
+      const searchText = (q.id + " " + q.text + " " + (q.hint || "")).replace(/<[^>]+>/g, " ").toLowerCase().replace(/"/g, "&quot;");
+      let body = `<p class="mb-2">${q.text}</p>`;
+      if (q.hint) body += `<p class="small text-body-secondary mb-2"><strong>Hint:</strong> ${q.hint}</p>`;
       if (q.table) {
-        body += `<div class="table-wrap"><table><thead><tr>${q.table.head.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>` +
-          q.table.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("") +
-          `</tbody></table></div>`;
+        body += `<div class="table-responsive"><table class="table table-sm table-bordered w-auto mb-0">
+          <thead class="table-light"><tr>${q.table.head.map(h => `<th class="sql-cell">${h}</th>`).join("")}</tr></thead>
+          <tbody>${q.table.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody>
+        </table></div>`;
       }
-      const searchText = (q.id + " " + q.text).replace(/<[^>]+>/g, " ").toLowerCase().replace(/"/g, "&quot;");
-      return `<details class="card q" data-search="${searchText}">
-        <summary class="q-head"><span><span class="q-id">${q.id}</span></span><span class="badge">${q.marks} ${q.marks === 1 ? "mark" : "marks"}</span></summary>
-        ${body}
-      </details>`;
+      return `<div class="card shadow-sm mb-3 q-card" data-qid="${q.id}" data-search="${searchText}">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+            <div class="d-flex align-items-center gap-2">
+              <span class="q-id">${q.id}</span>
+              <span class="badge text-bg-warning">${q.marks} ${q.marks === 1 ? "mark" : "marks"}</span>
+            </div>
+            <div class="form-check mb-0">
+              <input class="form-check-input done-box" type="checkbox" id="done-${q.id}" aria-label="Mark ${q.id} as done">
+              <label class="form-check-label small" for="done-${q.id}">Done</label>
+            </div>
+          </div>
+          ${body}
+        </div>
+      </div>`;
     }).join("");
-    return `<section class="block" id="sec-${s.id}">
-      <h2>${s.title}</h2>
-      <div class="section-marks">${s.marks} marks${s.intro ? " | " + s.intro : ""}</div>
+
+    const toolBlock = s.tool ? `
+      <div class="card border-warning mb-3">
+        <div class="card-body">
+          <div class="fw-semibold mb-2">Choose your dashboard tool</div>
+          <div class="btn-group mb-2" role="group" aria-label="Dashboard tool">
+            <input type="radio" class="btn-check" name="tool" id="tool-powerbi" value="powerbi" ${toolChoice === "powerbi" ? "checked" : ""}>
+            <label class="btn btn-outline-primary tool-btn" for="tool-powerbi">Power BI Desktop</label>
+            <input type="radio" class="btn-check" name="tool" id="tool-looker" value="looker" ${toolChoice === "looker" ? "checked" : ""}>
+            <label class="btn btn-outline-primary tool-btn" for="tool-looker">Looker</label>
+          </div>
+          <div id="toolTip" class="small mb-0"></div>
+          <div class="small text-body-secondary mt-2">Submit: Power BI file <code>&lt;student_number&gt;_dashboard.pbix</code>, or a Looker link plus a screenshot <code>&lt;student_number&gt;_dashboard.png</code>.</div>
+        </div>
+      </div>` : "";
+
+    return `<section class="mb-5" id="sec-${s.id}">
+      <div class="d-flex justify-content-between align-items-end mb-2 section-head">
+        <div>
+          <h2 class="h4 mb-1">Section ${s.id}: ${s.title}</h2>
+          ${s.intro ? `<p class="text-body-secondary small mb-0">${s.intro}</p>` : ""}
+        </div>
+        <span class="badge text-bg-primary fs-6">${s.marks} marks</span>
+      </div>
+      ${toolBlock}
       ${qs}
     </section>`;
   }).join("");
 }
 
-function setupControls() {
+function applyToolTip() {
+  const checked = document.querySelector("input[name='tool']:checked");
+  const tool = checked ? checked.value : "powerbi";
+  const tip = document.getElementById("toolTip");
+  if (tip) tip.textContent = TOOL_TIPS[tool];
+}
+
+function updateProgress() {
+  const done = ALL_IDS.filter(id => STORE.get("sunvolt-done-" + id) === "1").length;
+  const pct = Math.round((done / TOTAL_QUESTIONS) * 100);
+  document.getElementById("progressBar").style.width = pct + "%";
+  document.getElementById("progressBar").parentElement.setAttribute("aria-valuenow", String(pct));
+  document.getElementById("progressText").textContent = `${done}/${TOTAL_QUESTIONS}`;
+  document.querySelectorAll(".q-card").forEach(card => {
+    const isDone = STORE.get("sunvolt-done-" + card.dataset.qid) === "1";
+    card.classList.toggle("done", isDone);
+    card.querySelector(".done-box").checked = isDone;
+  });
+}
+
+function setupDone() {
+  document.querySelectorAll(".done-box").forEach(box => {
+    box.addEventListener("change", () => {
+      const id = box.id.replace("done-", "");
+      if (box.checked) STORE.set("sunvolt-done-" + id, "1");
+      else STORE.remove("sunvolt-done-" + id);
+      updateProgress();
+    });
+  });
+  document.getElementById("clearDone").addEventListener("click", () => {
+    ALL_IDS.forEach(id => STORE.remove("sunvolt-done-" + id));
+    updateProgress();
+  });
+}
+
+function setupTool() {
+  document.querySelectorAll("input[name='tool']").forEach(r => {
+    r.addEventListener("change", () => {
+      STORE.set("sunvolt-tool", r.value);
+      applyToolTip();
+    });
+  });
+  applyToolTip();
+}
+
+function setupSearch() {
   const search = document.getElementById("search");
   search.addEventListener("input", () => {
     const term = search.value.trim().toLowerCase();
-    document.querySelectorAll("details.q").forEach(d => {
-      const match = !term || d.dataset.search.includes(term);
-      d.classList.toggle("hidden", !match);
-      if (term && match) d.open = true;
+    document.querySelectorAll(".q-card").forEach(card => {
+      const match = !term || card.dataset.search.includes(term);
+      card.classList.toggle("d-none", !match);
     });
-    document.querySelectorAll("section.block[id^='sec-']").forEach(sec => {
-      const visible = sec.querySelectorAll("details.q:not(.hidden)").length > 0;
-      sec.classList.toggle("hidden", !visible);
+    document.querySelectorAll("section[id^='sec-']").forEach(sec => {
+      const visible = sec.querySelectorAll(".q-card:not(.d-none)").length > 0 || (!term);
+      sec.classList.toggle("d-none", !visible);
     });
   });
+}
 
-  const expand = document.getElementById("expandAll");
-  expand.addEventListener("click", () => {
-    const open = expand.dataset.open !== "1";
-    document.querySelectorAll("details.q").forEach(d => d.open = open);
-    expand.dataset.open = open ? "1" : "0";
-    expand.textContent = open ? "Collapse all" : "Expand all";
+function setupExpand() {
+  // Cards are always open in this layout, so this scrolls to the first visible question instead.
+  document.getElementById("expandAll").addEventListener("click", () => {
+    const first = document.querySelector(".q-card:not(.d-none)");
+    if (first) first.scrollIntoView({ behavior: "smooth", block: "start" });
   });
+}
 
-  const themeBtn = document.getElementById("theme");
-  themeBtn.addEventListener("click", () => {
-    const root = document.documentElement;
-    const isDark = root.dataset.theme === "dark" ||
-      (!root.dataset.theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    root.dataset.theme = isDark ? "light" : "dark";
+/* Timer: 3 hours, survives reload via localStorage. */
+const EXAM_MS = 3 * 60 * 60 * 1000;
+const WARN_MS = 15 * 60 * 1000;
+let timerHandle = null;
+
+function startTimer() {
+  if (!STORE.get("sunvolt-start")) STORE.set("sunvolt-start", String(Date.now()));
+  if (timerHandle) return;
+  tick();
+  timerHandle = setInterval(tick, 1000);
+  document.getElementById("startBtn").textContent = "Timer running";
+  document.getElementById("startBtn").disabled = true;
+}
+
+function tick() {
+  const startStr = STORE.get("sunvolt-start");
+  const timerEl = document.getElementById("timer");
+  if (!startStr) {
+    timerEl.textContent = "03:00:00";
+    timerEl.classList.remove("warn");
+    return;
+  }
+  const remaining = Math.max(0, EXAM_MS - (Date.now() - Number(startStr)));
+  const h = Math.floor(remaining / 3600000);
+  const m = Math.floor((remaining % 3600000) / 60000);
+  const s = Math.floor((remaining % 60000) / 1000);
+  timerEl.textContent = [h, m, s].map(n => String(n).padStart(2, "0")).join(":");
+  timerEl.classList.toggle("warn", remaining <= WARN_MS);
+  if (remaining === 0) {
+    clearInterval(timerHandle);
+    timerHandle = null;
+    timerEl.textContent = "Time is up";
+    document.getElementById("startBtn").disabled = true;
+  }
+}
+
+function setupTimer() {
+  document.getElementById("startBtn").addEventListener("click", startTimer);
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    STORE.remove("sunvolt-start");
+    if (timerHandle) { clearInterval(timerHandle); timerHandle = null; }
+    document.getElementById("startBtn").disabled = false;
+    document.getElementById("startBtn").textContent = "Start exam timer";
+    tick();
+  });
+  if (STORE.get("sunvolt-start")) {
+    startTimer();
+  }
+}
+
+function setupTheme() {
+  const btn = document.getElementById("themeBtn");
+  const apply = mode => document.documentElement.setAttribute("data-bs-theme", mode);
+  const saved = STORE.get("sunvolt-theme");
+  if (saved) apply(saved);
+  btn.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-bs-theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const next = current === "dark" ? "light" : "dark";
+    apply(next);
+    STORE.set("sunvolt-theme", next);
   });
 }
 
 renderDictionary();
 renderSections();
-setupControls();
+setupDone();
+setupTool();
+setupSearch();
+setupExpand();
+setupTimer();
+setupTheme();
+updateProgress();
 </script>
 </body>
 </html>
