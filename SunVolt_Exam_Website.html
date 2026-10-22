@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SunVolt Data Analytics Exam</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --text: #1d2330;
+    --muted: #5d6676;
+    --border: #dfe3ea;
+    --accent: #e08a00;
+    --accent-soft: #fdf1dc;
+    --code-bg: #101826;
+    --code-text: #e6edf7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12151c;
+      --surface: #1b2029;
+      --text: #e8ecf3;
+      --muted: #9aa3b2;
+      --border: #2c3340;
+      --accent: #f2a332;
+      --accent-soft: #33281a;
+      --code-bg: #0b0f16;
+      --code-text: #e6edf7;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12151c;
+    --surface: #1b2029;
+    --text: #e8ecf3;
+    --muted: #9aa3b2;
+    --border: #2c3340;
+    --accent: #f2a332;
+    --accent-soft: #33281a;
+    --code-bg: #0b0f16;
+    --code-text: #e6edf7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 16px 22px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 16px; }
+  h1 { margin: 0 0 6px; font-size: 1.7rem; }
+  .meta { color: var(--muted); font-size: 0.95rem; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+  nav.sections {
+    position: sticky; top: 0; z-index: 2;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  nav.sections .wrap { display: flex; gap: 8px; overflow-x: auto; padding-top: 10px; padding-bottom: 10px; }
+  nav.sections a {
+    white-space: nowrap; text-decoration: none; color: var(--text);
+    border: 1px solid var(--border); border-radius: 999px; padding: 4px 12px; font-size: 0.9rem;
+  }
+  nav.sections a:hover { border-color: var(--accent); }
+  main { padding: 24px 0 60px; }
+  section.block { margin-bottom: 32px; }
+  h2 { font-size: 1.25rem; margin: 0 0 4px; }
+  .section-marks { color: var(--muted); font-size: 0.9rem; margin-bottom: 12px; }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 12px;
+  }
+  .q-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+  .q-id { font-weight: 700; color: var(--accent); }
+  .badge {
+    background: var(--accent-soft); color: var(--accent);
+    border-radius: 999px; padding: 2px 10px; font-size: 0.82rem; font-weight: 600; white-space: nowrap;
+  }
+  .q-text { margin: 8px 0 0; }
+  .hint { color: var(--muted); font-size: 0.92rem; margin: 8px 0 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; margin: 10px 0 4px; }
+  th, td { text-align: left; border-bottom: 1px solid var(--border); padding: 7px 8px; vertical-align: top; }
+  th { color: var(--muted); font-weight: 600; }
+  .table-wrap { overflow-x: auto; }
+  .info { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+  .info ol, .info ul { margin: 6px 0 0; padding-left: 20px; }
+  .info li { margin-bottom: 4px; }
+  code { font-family: ui-monospace, Consolas, monospace; font-size: 0.9em; background: var(--accent-soft); padding: 1px 5px; border-radius: 4px; }
+  .sql-box {
+    background: var(--code-bg); color: var(--code-text);
+    border-radius: 8px; padding: 10px 12px; margin-top: 10px;
+    font: 0.88rem/1.5 ui-monospace, Consolas, monospace; white-space: pre-wrap;
+  }
+  .toolbar { display: flex; gap: 8px; align-items: center; margin: 12px 0 0; flex-wrap: wrap; }
+  .toolbar input {
+    flex: 1 1 220px; padding: 8px 10px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text); font: inherit;
+  }
+  button {
+    font: inherit; cursor: pointer; border-radius: 8px; padding: 7px 12px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  }
+  button:hover { border-color: var(--accent); }
+  .hidden { display: none !important; }
+  footer { color: var(--muted); font-size: 0.85rem; text-align: center; padding: 20px 0 40px; }
+  @media (max-width: 520px) {
+    h1 { font-size: 1.4rem; }
+    .q-head { flex-direction: column; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>SunVolt Solar: First-Year Data Analytics Practical Exam</h1>
+    <div class="meta">
+      <span>Duration: 3 hours</span>
+      <span>Total: 100 marks (SQL 75 | Power BI 25)</span>
+      <span>Dataset: SunVolt Solar Customer Data.xlsx</span>
+    </div>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search questions (for example: GROUP BY, conversion, B4)" aria-label="Search questions">
+      <button id="expandAll" type="button">Expand all</button>
+      <button id="theme" type="button" aria-label="Toggle colour theme">Toggle theme</button>
+    </div>
+  </div>
+</header>
+
+<nav class="sections" aria-label="Exam sections">
+  <div class="wrap" id="navLinks"></div>
+</nav>
+
+<main>
+  <div class="wrap">
+
+    <section class="block" id="instructions">
+      <h2>Instructions</h2>
+      <div class="info">
+        <ol>
+          <li>Save all SQL in one file named <code>&lt;student_number&gt;_exam.sql</code>. Run it top to bottom.</li>
+          <li>Use the table and column names exactly as given.</li>
+          <li>Where a question asks for an <strong>alias</strong>, use the exact alias name given.</li>
+          <li>Put a comment above each answer, for example <code>-- A2</code>.</li>
+          <li>Submit your <code>.sql</code> file and your Power BI file <code>&lt;student_number&gt;_dashboard.pbix</code>.</li>
+          <li>Work independently. Do not discuss answers with other students.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="block" id="dictionary">
+      <h2>Dataset Dictionary</h2>
+      <div class="section-marks">Load the Excel sheet into two SQL tables, as described in Section A.</div>
+      <div class="card table-wrap">
+        <table>
+          <thead><tr><th>Excel column</th><th>SQL column</th><th>Table</th><th>Description</th></tr></thead>
+          <tbody id="dictBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div id="sections"></div>
+
+    <footer>SunVolt Solar exam. Total 100 marks.</footer>
+  </div>
+</main>
+
+<script>
+const DICTIONARY = [
+  ["Customer ID", "customer_id", "customers", "Customer identifier"],
+  ["Marital Status", "marital_status", "customers", "Married / Single"],
+  ["Gender", "gender", "customers", "Male / Female"],
+  ["Annual Income", "annual_income", "customers", "Yearly income (numeric)"],
+  ["Household Dependents", "household_dependents", "customers", "Number of dependents"],
+  ["Education Level", "education_level", "customers", "e.g. Bachelors, High School"],
+  ["Occupation", "occupation", "customers", "e.g. Professional, Clerical"],
+  ["Homeowner Status", "homeowner_status", "customers", "Yes / No"],
+  ["Vehicles Owned", "vehicles_owned", "customers", "Number of vehicles"],
+  ["Distance from Nearest Installer", "distance_band", "customers", "e.g. 0-1 km, 10+ km"],
+  ["Region", "region", "customers", "North America / Europe / Pacific"],
+  ["Age", "age", "customers", "Age in years"],
+  ["Purchased Solar System", "purchased_solar_system", "customers", "Yes / No"],
+  ["Purchase Flag", "purchase_flag", "customers", "1 = purchased, 0 = did not purchase"],
+  ["Age Group", "age_group", "customers", "e.g. 30-39, 60+"],
+  ["Income Band", "income_band", "customers", "e.g. <30k, 30k-49k, 100k+"],
+  ["Installer Distance Order", "installer_distance_order", "distance_bands", "Ranking of distance band (1 = nearest). Not stored in customers."]
+];
+
+const SECTIONS = [
+  {
+    id: "A", title: "Section A: Database and Table Creation", marks: 12,
+    questions: [
+      { id: "A1", marks: 2, text: "Create a database called <code>SunVolt</code> and switch to it." },
+      { id: "A2", marks: 4, text: "Create a table called <code>customers</code> with the 16 <code>customers</code> columns from the dictionary above.",
+        hint: "Use the SQL column names exactly. Choose suitable data types: numbers must be numeric types and text must be character types. Do not add a primary key on <code>customer_id</code>." },
+      { id: "A3", marks: 3, text: "Create a table called <code>distance_bands</code> with <code>distance_band</code> (text, primary key) and <code>installer_distance_order</code> (integer, not null). Then insert the five rows below.",
+        table: { head: ["distance_band", "installer_distance_order"], rows: [["0-1 km", "1"], ["1-2 km", "2"], ["2-5 km", "3"], ["5-10 km", "4"], ["10+ km", "5"]] } },
+      { id: "A4", marks: 2, text: "Import all rows from the Excel sheet into <code>customers</code>. Use the SSMS Import Data wizard or your own method. Map <code>Distance from Nearest Installer</code> to <code>distance_band</code>. Leave out <code>Installer Distance Order</code>. Then write a query that returns the row count of <code>customers</code>." },
+      { id: "A5", marks: 1, text: "In one or two sentences, explain the difference between <code>DELETE</code>, <code>TRUNCATE</code> and <code>DROP</code>." }
+    ]
+  },
+  {
+    id: "B", title: "Section B: Selecting, Filtering and Aliases", marks: 18,
+    intro: "Use aliases where they are asked for. Every query must run without errors.",
+    questions: [
+      { id: "B1", marks: 3, text: "Return <code>customer_id</code>, <code>age</code>, and <code>annual_income</code>. Alias <code>annual_income</code> as <code>income</code>. Include only customers in the <strong>Europe</strong> region who are <strong>40 years or older</strong>." },
+      { id: "B2", marks: 2, text: "List the <strong>distinct</strong> occupations, sorted alphabetically." },
+      { id: "B3", marks: 3, text: "Return <code>customer_id</code> and <code>annual_income</code> for customers earning <strong>between 30,000 and 70,000</strong> inclusive. Sort from highest to lowest income." },
+      { id: "B4", marks: 3, text: "Return two columns, aliased as <code>total_rows</code> and <code>unique_customers</code>: the total number of rows in <code>customers</code>, and the number of distinct <code>customer_id</code> values." },
+      { id: "B5", marks: 3, text: "Return <code>customer_id</code>, <code>education_level</code> and <code>homeowner_status</code> for customers whose education is <strong>Bachelors</strong> or <strong>Graduate Degree</strong> and who are <strong>homeowners</strong>." },
+      { id: "B6", marks: 2, text: "Return <code>customer_id</code> and <code>occupation</code> for every customer whose occupation starts with <code>Man</code>." },
+      { id: "B7", marks: 2, text: "Return <code>customer_id</code>, <code>marital_status</code>, <code>vehicles_owned</code> and <code>household_dependents</code> for <strong>single</strong> customers who own <strong>2 or more vehicles OR have 3 or more dependents</strong>." }
+    ]
+  },
+  {
+    id: "C", title: "Section C: Aggregation and Grouping", marks: 22,
+    intro: "Round all percentages to one decimal place. Use aliases for every calculated column.",
+    questions: [
+      { id: "C1", marks: 4, text: "Return one row with: <code>customers</code> (total rows); <code>purchases</code> (customers with <code>purchase_flag = 1</code>); and <code>conversion_pct</code> (purchases as a percentage of total customers)." },
+      { id: "C2", marks: 4, text: "For each <code>region</code>, return <code>region</code>, <code>customers</code>, <code>purchases</code> and <code>conversion_pct</code>. Sort by <code>conversion_pct</code>, highest first." },
+      { id: "C3", marks: 4, text: "For each <code>education_level</code> with <strong>at least 100 customers</strong>, return <code>education_level</code>, <code>customers</code> and <code>avg_income</code> (average <code>annual_income</code>, rounded to 0 decimal places). Sort by <code>avg_income</code>, highest first." },
+      { id: "C4", marks: 4, text: "For each <code>age_group</code> that has <strong>more than 50 purchases</strong>, return <code>age_group</code>, <code>customers</code> and <code>purchases</code>. Sort by <code>purchases</code>, highest first." },
+      { id: "C5", marks: 6, text: "For each <code>gender</code>, return <code>gender</code>, <code>youngest</code> (minimum <code>age</code>), <code>oldest</code> (maximum <code>age</code>), and <code>avg_income</code> (average <code>annual_income</code>, rounded to 0 decimal places)." }
+    ]
+  },
+  {
+    id: "D", title: "Section D: Joins and Subqueries", marks: 13,
+    questions: [
+      { id: "D1", marks: 4, text: "Join <code>customers</code> to <code>distance_bands</code> on <code>distance_band</code>. For each <code>installer_distance_order</code>, return <code>installer_distance_order</code>, <code>customers</code> and <code>purchases</code>. Sort by <code>installer_distance_order</code>." },
+      { id: "D2", marks: 3, text: "Using a <strong>subquery</strong>, return <code>customer_id</code> and <code>annual_income</code> for customers earning <strong>more than the average annual income</strong> of all customers. Count how many rows are returned and put that count in a comment." },
+      { id: "D3", marks: 3, text: "Using a <strong>subquery</strong>, return <code>customer_id</code>, <code>region</code> and <code>purchase_flag</code> for customers who live in a region whose <strong>purchase rate is above 45%</strong>.", hint: "A purchase rate is the average of <code>purchase_flag</code>." },
+      { id: "D4", marks: 3, text: "Use a <strong>LEFT JOIN</strong> from <code>distance_bands</code> to <code>customers</code>. Return <code>distance_band</code> and <code>customers</code> (the number of customers in each band). Include every band, even if it has no customers. Sort by <code>installer_distance_order</code>." }
+    ]
+  },
+  {
+    id: "E", title: "Section E: Data Quality and CASE", marks: 10,
+    questions: [
+      { id: "E1", marks: 4, text: "Use a <code>CASE</code> expression to group customers into these segments by <code>age</code>: <code>Under 40</code> (age below 40), <code>40-59</code> (age 40 to 59), and <code>60+</code> (age 60 and above). Return <code>age_segment</code>, <code>customers</code>, <code>purchases</code> and <code>conversion_pct</code>. Sort by <code>age_segment</code>." },
+      { id: "E2", marks: 3, text: "Find every <code>customer_id</code> that appears <strong>more than once</strong> in <code>customers</code>. Return <code>customer_id</code> and a count aliased as <code>copies</code>. Sort by <code>customer_id</code>." },
+      { id: "E3", marks: 2, text: "Count the rows where <code>purchased_solar_system</code> and <code>purchase_flag</code> <strong>disagree</strong>. Alias the count as <code>mismatches</code>." },
+      { id: "E4", marks: 1, text: "Count the <strong>distinct</strong> customers who purchased a system. Alias the count as <code>unique_buyers</code>." }
+    ]
+  },
+  {
+    id: "F", title: "Section F: Power BI Dashboard", marks: 25,
+    intro: "Build a two-page dashboard in Power BI Desktop, using the same data as in Section A.",
+    questions: [
+      { id: "F1", marks: 4, text: "<strong>Data model.</strong> Load both tables (<code>customers</code> and <code>distance_bands</code>). Create a relationship: <code>customers[distance_band]</code> to <code>distance_bands[distance_band]</code>, many-to-one, single direction." },
+      { id: "F2", marks: 6, text: "<strong>DAX measures.</strong> Create these measures in a measures table: <code>Total Customers</code> (count of rows in <code>customers</code>); <code>Purchases</code> (sum of <code>purchase_flag</code>); <code>Conversion Rate %</code> (<code>Purchases</code> divided by <code>Total Customers</code>, using <code>DIVIDE</code>, formatted as a percentage); and <code>Avg Annual Income</code> (average of <code>annual_income</code>)." },
+      { id: "F3", marks: 10, text: "<strong>Page 1, \"Overview\".</strong> Four KPI cards (<code>Total Customers</code>, <code>Purchases</code>, <code>Conversion Rate %</code>, <code>Avg Annual Income</code>); a bar chart of <code>Conversion Rate %</code> by <code>region</code>; a column chart of <code>Purchases</code> by <code>education_level</code>; a donut chart of customers split by <code>purchased_solar_system</code>; two slicers (<code>region</code> and <code>age_group</code>). Every visual must have a clear title and readable labels." },
+      { id: "F4", marks: 5, text: "<strong>Page 2, \"Customer Profile\".</strong> (a) A column chart of <code>Conversion Rate %</code> by <code>income_band</code>, in logical order: <code>&lt;30k</code>, <code>30k-49k</code>, <code>50k-69k</code>, <code>70k-99k</code>, <code>100k+</code>. Alphabetical order does not count. (b) A bar chart of <code>Conversion Rate %</code> by <code>installer_distance_order</code> (from <code>distance_bands</code>), with the band names on the axis. (c) A matrix with <code>age_group</code> in rows, <code>homeowner_status</code> in columns and <code>Conversion Rate %</code> as the value." },
+      { id: "F5", marks: 0, text: "<strong>Insights (required, 0 marks).</strong> On Page 2, add a text box with <strong>three</strong> short findings from your dashboard. Each finding must cite a number from one of your visuals." }
+    ]
+  }
+];
+
+function renderDictionary() {
+  document.getElementById("dictBody").innerHTML = DICTIONARY.map(r =>
+    `<tr><td>${r[0]}</td><td><code>${r[1]}</code></td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("");
+}
+
+function renderSections() {
+  const nav = SECTIONS.map(s => `<a href="#sec-${s.id}">${s.id}: ${s.marks} marks</a>`).join("");
+  document.getElementById("navLinks").innerHTML = nav;
+
+  document.getElementById("sections").innerHTML = SECTIONS.map(s => {
+    const qs = s.questions.map(q => {
+      let body = `<p class="q-text">${q.text}</p>`;
+      if (q.hint) body += `<p class="hint">Hint: ${q.hint}</p>`;
+      if (q.table) {
+        body += `<div class="table-wrap"><table><thead><tr>${q.table.head.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>` +
+          q.table.rows.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join("")}</tr>`).join("") +
+          `</tbody></table></div>`;
+      }
+      const searchText = (q.id + " " + q.text).replace(/<[^>]+>/g, " ").toLowerCase().replace(/"/g, "&quot;");
+      return `<details class="card q" data-search="${searchText}">
+        <summary class="q-head"><span><span class="q-id">${q.id}</span></span><span class="badge">${q.marks} ${q.marks === 1 ? "mark" : "marks"}</span></summary>
+        ${body}
+      </details>`;
+    }).join("");
+    return `<section class="block" id="sec-${s.id}">
+      <h2>${s.title}</h2>
+      <div class="section-marks">${s.marks} marks${s.intro ? " | " + s.intro : ""}</div>
+      ${qs}
+    </section>`;
+  }).join("");
+}
+
+function setupControls() {
+  const search = document.getElementById("search");
+  search.addEventListener("input", () => {
+    const term = search.value.trim().toLowerCase();
+    document.querySelectorAll("details.q").forEach(d => {
+      const match = !term || d.dataset.search.includes(term);
+      d.classList.toggle("hidden", !match);
+      if (term && match) d.open = true;
+    });
+    document.querySelectorAll("section.block[id^='sec-']").forEach(sec => {
+      const visible = sec.querySelectorAll("details.q:not(.hidden)").length > 0;
+      sec.classList.toggle("hidden", !visible);
+    });
+  });
+
+  const expand = document.getElementById("expandAll");
+  expand.addEventListener("click", () => {
+    const open = expand.dataset.open !== "1";
+    document.querySelectorAll("details.q").forEach(d => d.open = open);
+    expand.dataset.open = open ? "1" : "0";
+    expand.textContent = open ? "Collapse all" : "Expand all";
+  });
+
+  const themeBtn = document.getElementById("theme");
+  themeBtn.addEventListener("click", () => {
+    const root = document.documentElement;
+    const isDark = root.dataset.theme === "dark" ||
+      (!root.dataset.theme && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    root.dataset.theme = isDark ? "light" : "dark";
+  });
+}
+
+renderDictionary();
+renderSections();
+setupControls();
+</script>
+</body>
+</html>
