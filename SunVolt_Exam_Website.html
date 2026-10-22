@@ -46,6 +46,7 @@
   <div class="container-xl">
     <span class="navbar-brand fw-semibold">SunVolt Data Analytics</span>
     <div class="ms-auto d-flex align-items-center gap-2">
+      <a class="btn btn-sm btn-outline-primary" href="SunVolt_Exam_Instructions.html">Instructions</a>
       <span class="small text-body-secondary d-none d-md-inline">Progress</span>
       <div class="progress sticky-progress" style="width: 140px;" role="progressbar" aria-label="Exam progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
         <div id="progressBar" class="progress-bar bg-success" style="width: 0%"></div>
@@ -109,31 +110,9 @@
 
     <div class="col-lg-9">
 
-      <div class="card shadow-sm mb-4">
-        <div class="card-body">
-          <h2 class="h5 section-head mb-3">Exam rules</h2>
-          <ol class="mb-0">
-            <li>Save all SQL in one file named <code>&lt;student_number&gt;_exam.sql</code>. Run it top to bottom.</li>
-            <li>Use the table and column names exactly as given. Put a comment above each answer, for example <code>-- A2</code>.</li>
-            <li>Where a question asks for an <strong>alias</strong>, use the exact name given.</li>
-            <li>Choose <strong>one</strong> dashboard tool in Section F: Power BI or Looker.</li>
-            <li>Submit your <code>.sql</code> file and your dashboard (<code>.pbix</code> or Looker link and screenshot).</li>
-            <li>Work independently. Do not discuss answers with other students.</li>
-          </ol>
-        </div>
-      </div>
-
-      <div class="card shadow-sm mb-4">
-        <div class="card-header fw-semibold">Dataset dictionary</div>
-        <div class="card-body">
-          <p class="small text-body-secondary mb-2">Load the Excel sheet into two SQL tables, as described in Section A.</p>
-          <div class="table-responsive">
-            <table class="table table-sm table-striped align-middle mb-0">
-              <thead><tr><th>Excel column</th><th>SQL column</th><th>Table</th><th>Description</th></tr></thead>
-              <tbody id="dictBody"></tbody>
-            </table>
-          </div>
-        </div>
+      <div class="alert alert-primary d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4" role="alert">
+        <span>Rules, the dataset dictionary and the dataset download are on the <strong>Instructions</strong> page.</span>
+        <a class="btn btn-sm btn-primary" href="SunVolt_Exam_Instructions.html">Open instructions</a>
       </div>
 
       <div id="sections"></div>
@@ -149,26 +128,6 @@ const TOOL_TIPS = {
   powerbi: "Power BI: use Model view for the relationship, the Measures table for DAX (DIVIDE for safe division), and Sort by column for income bands.",
   looker: "Looker: join the tables in an Explore (or blend them in Looker Studio), define measures as calculated fields, and set the sort order on the chart. A dashboard tab counts as a page."
 };
-
-const DICTIONARY = [
-  ["Customer ID", "customer_id", "customers", "Customer identifier"],
-  ["Marital Status", "marital_status", "customers", "Married / Single"],
-  ["Gender", "gender", "customers", "Male / Female"],
-  ["Annual Income", "annual_income", "customers", "Yearly income (numeric)"],
-  ["Household Dependents", "household_dependents", "customers", "Number of dependents"],
-  ["Education Level", "education_level", "customers", "e.g. Bachelors, High School"],
-  ["Occupation", "occupation", "customers", "e.g. Professional, Clerical"],
-  ["Homeowner Status", "homeowner_status", "customers", "Yes / No"],
-  ["Vehicles Owned", "vehicles_owned", "customers", "Number of vehicles"],
-  ["Distance from Nearest Installer", "distance_band", "customers", "e.g. 0-1 km, 10+ km"],
-  ["Region", "region", "customers", "North America / Europe / Pacific"],
-  ["Age", "age", "customers", "Age in years"],
-  ["Purchased Solar System", "purchased_solar_system", "customers", "Yes / No"],
-  ["Purchase Flag", "purchase_flag", "customers", "1 = purchased, 0 = did not purchase"],
-  ["Age Group", "age_group", "customers", "e.g. 30-39, 60+"],
-  ["Income Band", "income_band", "customers", "e.g. <30k, 30k-49k, 100k+"],
-  ["Installer Distance Order", "installer_distance_order", "distance_bands", "Ranking of distance band (1 = nearest). Not stored in customers."]
-];
 
 const SECTIONS = [
   {
@@ -246,11 +205,6 @@ const STORE = {
 };
 
 const ALL_IDS = SECTIONS.flatMap(s => s.questions.map(q => q.id));
-
-function renderDictionary() {
-  document.getElementById("dictBody").innerHTML = DICTIONARY.map(r =>
-    `<tr><td>${r[0]}</td><td class="sql-cell">${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("");
-}
 
 function renderSections() {
   document.getElementById("sectionNav").innerHTML = SECTIONS.map(s =>
@@ -449,7 +403,6 @@ function setupTheme() {
   });
 }
 
-renderDictionary();
 renderSections();
 setupDone();
 setupTool();

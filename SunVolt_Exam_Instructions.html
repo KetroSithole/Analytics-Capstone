@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SunVolt Exam Instructions</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+<style>
+  .exam-hero { background: linear-gradient(135deg, #1f3b73 0%, #2e6fd6 55%, #f2a332 130%); color: #fff; }
+  .exam-hero .lead { color: rgba(255,255,255,.88); }
+  .section-head { border-left: .35rem solid #f2a332; padding-left: .75rem; }
+  .sql-cell { font-family: var(--bs-font-monospace); font-size: .88rem; }
+  code { color: var(--bs-danger-text-emphasis); }
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 2rem; height: 2rem; border-radius: 50%;
+    background: #2e6fd6; color: #fff; font-weight: 700; flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand bg-body-tertiary border-bottom sticky-top">
+  <div class="container-xl">
+    <span class="navbar-brand fw-semibold">SunVolt Data Analytics</span>
+    <div class="ms-auto d-flex align-items-center gap-2">
+      <a class="btn btn-sm btn-outline-secondary" href="SunVolt_Exam_Website.html">Exam questions</a>
+      <a class="btn btn-sm btn-primary" href="SunVolt_Exam_Instructions.html" aria-current="page">Instructions</a>
+      <button id="themeBtn" class="btn btn-sm btn-outline-secondary" type="button">Theme</button>
+    </div>
+  </div>
+</nav>
+
+<header class="exam-hero py-5">
+  <div class="container-xl">
+    <p class="text-uppercase small fw-semibold mb-2 opacity-75">Read before you start</p>
+    <h1 class="display-6 fw-bold mb-2">Exam Instructions and Resources</h1>
+    <p class="lead mb-0">Read the rules, download the dataset and check the submission checklist before the exam starts.</p>
+  </div>
+</header>
+
+<main class="container-xl py-4">
+  <div class="row g-4">
+    <div class="col-lg-8">
+
+      <section class="mb-5" id="glance">
+        <h2 class="h4 section-head mb-3">Exam at a glance</h2>
+        <div class="row g-3">
+          <div class="col-6 col-md-3"><div class="card shadow-sm h-100"><div class="card-body"><div class="small text-body-secondary">Duration</div><div class="fs-5 fw-semibold">3 hours</div></div></div></div>
+          <div class="col-6 col-md-3"><div class="card shadow-sm h-100"><div class="card-body"><div class="small text-body-secondary">Total marks</div><div class="fs-5 fw-semibold">100</div></div></div></div>
+          <div class="col-6 col-md-3"><div class="card shadow-sm h-100"><div class="card-body"><div class="small text-body-secondary">SQL</div><div class="fs-5 fw-semibold">75 marks</div></div></div></div>
+          <div class="col-6 col-md-3"><div class="card shadow-sm h-100"><div class="card-body"><div class="small text-body-secondary">Dashboard</div><div class="fs-5 fw-semibold">25 marks</div></div></div></div>
+        </div>
+        <div class="table-responsive mt-3">
+          <table class="table table-sm table-striped align-middle mb-0">
+            <thead><tr><th>Section</th><th>Topic</th><th class="text-end">Marks</th></tr></thead>
+            <tbody>
+              <tr><td>A</td><td>Database and table creation</td><td class="text-end">12</td></tr>
+              <tr><td>B</td><td>Selecting, filtering and aliases</td><td class="text-end">18</td></tr>
+              <tr><td>C</td><td>Aggregation and grouping</td><td class="text-end">22</td></tr>
+              <tr><td>D</td><td>Joins and subqueries</td><td class="text-end">13</td></tr>
+              <tr><td>E</td><td>Data quality and CASE</td><td class="text-end">10</td></tr>
+              <tr><td>F</td><td>Dashboard (Power BI or Looker)</td><td class="text-end">25</td></tr>
+              <tr class="table-light fw-semibold"><td colspan="2">Total</td><td class="text-end">100</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="mb-5" id="rules">
+        <h2 class="h4 section-head mb-3">Rules</h2>
+        <ol class="mb-0">
+          <li class="mb-2">Save all SQL in one file named <code>&lt;student_number&gt;_exam.sql</code>. Run it top to bottom.</li>
+          <li class="mb-2">Use the table and column names exactly as given in the dictionary below.</li>
+          <li class="mb-2">Where a question asks for an <strong>alias</strong>, use the exact name given.</li>
+          <li class="mb-2">Put a comment above each answer, for example <code>-- A2</code>.</li>
+          <li class="mb-2">Choose <strong>one</strong> dashboard tool for Section F: Power BI or Looker. State your choice at the top of your SQL file, for example <code>-- Section F tool: Looker</code>.</li>
+          <li class="mb-2">Work independently. Do not discuss answers with other students.</li>
+        </ol>
+      </section>
+
+      <section class="mb-5" id="dashboard">
+        <h2 class="h4 section-head mb-3">Section F: Choose your dashboard tool</h2>
+        <div class="table-responsive">
+          <table class="table table-bordered align-middle mb-0">
+            <thead class="table-light"><tr><th>Option</th><th>What to submit</th><th>How measures are built</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><strong>Power BI Desktop</strong></td>
+                <td><code>&lt;student_number&gt;_dashboard.pbix</code></td>
+                <td>DAX measures, relationship in Model view, slicers for filters</td>
+              </tr>
+              <tr>
+                <td><strong>Looker</strong> (or Looker Studio)</td>
+                <td>A shared link to the dashboard, plus <code>&lt;student_number&gt;_dashboard.png</code></td>
+                <td>Calculated fields or LookML measures, join in an Explore, dashboard filters</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small text-body-secondary mt-2 mb-0">Both tools are marked against the same rubric. The dashboard needs two pages (Looker: two dashboard tabs).</p>
+      </section>
+
+      <section class="mb-5" id="data-steps">
+        <h2 class="h4 section-head mb-3">Loading the data into SQL Server</h2>
+        <div class="d-flex gap-3 mb-3"><span class="step-num">1</span><div>Create the database <code>SunVolt</code> and switch to it (Section A1).</div></div>
+        <div class="d-flex gap-3 mb-3"><span class="step-num">2</span><div>Create the <code>customers</code> table with the 16 columns in the dictionary, then the <code>distance_bands</code> table with its five rows (Sections A2 and A3).</div></div>
+        <div class="d-flex gap-3 mb-3"><span class="step-num">3</span><div>Import the Excel sheet into <code>customers</code> using the SSMS Import Data wizard. Map <em>Distance from Nearest Installer</em> to <code>distance_band</code> and leave out <em>Installer Distance Order</em> (Section A4).</div></div>
+        <div class="d-flex gap-3"><span class="step-num">4</span><div>Check the import: <code>customers</code> should hold <strong>1,026 rows</strong>.</div></div>
+      </section>
+
+      <section class="mb-5" id="dictionary">
+        <h2 class="h4 section-head mb-3">Dataset dictionary</h2>
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-sm table-striped align-middle mb-0">
+                <thead><tr><th>Excel column</th><th>SQL column</th><th>Table</th><th>Description</th></tr></thead>
+                <tbody id="dictBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="mb-5" id="submit">
+        <h2 class="h4 section-head mb-3">Submission checklist</h2>
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" id="c1"><label class="form-check-label" for="c1"><code>&lt;student_number&gt;_exam.sql</code> runs without errors</label></div>
+            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" id="c2"><label class="form-check-label" for="c2">Every answer has a comment such as <code>-- B4</code></label></div>
+            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" id="c3"><label class="form-check-label" for="c3">The Section F tool is stated at the top of the SQL file</label></div>
+            <div class="form-check mb-2"><input class="form-check-input" type="checkbox" id="c4"><label class="form-check-label" for="c4">Dashboard file or link and screenshot are included</label></div>
+            <div class="form-check"><input class="form-check-input" type="checkbox" id="c5"><label class="form-check-label" for="c5">The work is my own</label></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="col-lg-4">
+      <div class="card shadow-sm sticky-lg-top" style="top: 1.5rem;">
+        <div class="card-header fw-semibold">Resources</div>
+        <div class="card-body d-grid gap-2">
+          <a class="btn btn-primary" href="data/SunVolt_Solar_Customer_Data.xlsx" download>Download the dataset (.xlsx)</a>
+          <a class="btn btn-outline-dark" id="githubLink" href="https://github.com/" target="_blank" rel="noopener">View on GitHub</a>
+          <a class="btn btn-outline-secondary" href="SunVolt_Exam_Website.html">Go to the exam questions</a>
+          <p class="small text-body-secondary mt-2 mb-0">Dataset: one sheet, <em>Solar Customer Data</em>, 1,026 rows, 17 columns.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="container-xl text-center small text-body-secondary py-4">SunVolt Solar exam. Total 100 marks.</footer>
+
+<script>
+const DICTIONARY = [
+  ["Customer ID", "customer_id", "customers", "Customer identifier"],
+  ["Marital Status", "marital_status", "customers", "Married / Single"],
+  ["Gender", "gender", "customers", "Male / Female"],
+  ["Annual Income", "annual_income", "customers", "Yearly income (numeric)"],
+  ["Household Dependents", "household_dependents", "customers", "Number of dependents"],
+  ["Education Level", "education_level", "customers", "e.g. Bachelors, High School"],
+  ["Occupation", "occupation", "customers", "e.g. Professional, Clerical"],
+  ["Homeowner Status", "homeowner_status", "customers", "Yes / No"],
+  ["Vehicles Owned", "vehicles_owned", "customers", "Number of vehicles"],
+  ["Distance from Nearest Installer", "distance_band", "customers", "e.g. 0-1 km, 10+ km"],
+  ["Region", "region", "customers", "North America / Europe / Pacific"],
+  ["Age", "age", "customers", "Age in years"],
+  ["Purchased Solar System", "purchased_solar_system", "customers", "Yes / No"],
+  ["Purchase Flag", "purchase_flag", "customers", "1 = purchased, 0 = did not purchase"],
+  ["Age Group", "age_group", "customers", "e.g. 30-39, 60+"],
+  ["Income Band", "income_band", "customers", "e.g. <30k, 30k-49k, 100k+"],
+  ["Installer Distance Order", "installer_distance_order", "distance_bands", "Ranking of distance band (1 = nearest). Not stored in customers."]
+];
+
+/* Replace with the course repository link before sharing. */
+const GITHUB_URL = "https://github.com/";
+
+document.getElementById("dictBody").innerHTML = DICTIONARY.map(r =>
+  `<tr><td>${r[0]}</td><td class="sql-cell">${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join("");
+document.getElementById("githubLink").href = GITHUB_URL;
+
+const STORE = {
+  get(key) { try { return localStorage.getItem(key); } catch (e) { return null; } },
+  set(key, value) { try { localStorage.setItem(key, value); } catch (e) { /* storage blocked */ } }
+};
+function applyTheme(mode) { document.documentElement.setAttribute("data-bs-theme", mode); }
+if (STORE.get("sunvolt-theme")) applyTheme(STORE.get("sunvolt-theme"));
+document.getElementById("themeBtn").addEventListener("click", () => {
+  const current = document.documentElement.getAttribute("data-bs-theme") ||
+    (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  const next = current === "dark" ? "light" : "dark";
+  applyTheme(next);
+  STORE.set("sunvolt-theme", next);
+});
+</script>
+</body>
+</html>
